@@ -13,13 +13,10 @@ defmodule TodoListTest do
 
     test_list =
       TodoList.new()
-      |> TodoList.add_entry(
-        expected_date,
-        expected_title
-      )
+      |> TodoList.add_entry(%{date: expected_date, title: expected_title})
 
-    actual_title = hd(TodoList.entries(test_list, expected_date))
-    assert expected_title == actual_title
+    actual_entry = hd(TodoList.entries(test_list, expected_date))
+    assert expected_title == actual_entry.title
   end
 
   test "adds entry for existing date" do
@@ -28,20 +25,14 @@ defmodule TodoListTest do
 
     test_list =
       TodoList.new()
-      |> TodoList.add_entry(
-        expected_date,
-        "Eat breakfast"
-      )
-      |> TodoList.add_entry(
-        expected_date,
-        expected_title
-      )
+      |> TodoList.add_entry(%{date: expected_date, title: "Eat breakfast"})
+      |> TodoList.add_entry(%{date: expected_date, title: expected_title})
 
-    actual_title =
+    actual_entry =
       TodoList.entries(test_list, expected_date)
-      |> Enum.filter(&(&1 == "Dentist"))
+      |> Enum.filter(&(&1.title == "Dentist"))
       |> hd()
 
-    assert expected_title == actual_title
+    assert expected_title == actual_entry.title
   end
 end
