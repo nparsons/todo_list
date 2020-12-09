@@ -1,18 +1,12 @@
 defmodule TodoList do
-  @moduledoc """
-  Documentation for `TodoList`.
-  """
+  def new(), do: %{}
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> TodoList.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def add_entry(todo_list, date, title) do
+    Map.update(
+      todo_list,
+      date,
+      [title],
+      fn titles -> [title | titles] end
+    )
   end
 end
