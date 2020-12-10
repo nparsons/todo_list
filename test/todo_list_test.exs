@@ -3,8 +3,10 @@ defmodule TodoListTest do
   doctest TodoList
 
   test "creates a new to-do list" do
+    expected_entries = 0
     empty_list = TodoList.new()
-    assert [] == TodoList.entries(empty_list, ~D[2020-12-09])
+
+    assert expected_entries == Enum.count(empty_list.entries)
   end
 
   test "adds entry for non-existant date" do
