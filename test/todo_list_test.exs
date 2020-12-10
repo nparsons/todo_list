@@ -68,4 +68,21 @@ defmodule TodoListTest do
 
     assert 0 == original_title_count
   end
+
+  test "deletes entry with non-existing id" do
+    test_list = TodoList.new()
+    test_entries = test_list.entries
+    test_list = TodoList.delete_entry(test_list, -44)
+    assert test_list.entries == test_entries
+  end
+
+  test "deletes entity with existing id" do
+    test_list =
+      TodoList.new()
+      |> TodoList.add_entry(%{date: ~D[2020-12-10], title: "Dentist"})
+
+    test_entries = test_list.entries
+    test_list = TodoList.delete_entry(test_list, 1)
+    assert test_entries != test_list.entries
+  end
 end

@@ -33,4 +33,15 @@ defmodule TodoList do
         %TodoList{todo_list | entries: new_entries}
     end
   end
+
+  def delete_entry(todo_list, entry_id) do
+    case Map.fetch(todo_list.entries, entry_id) do
+      :error ->
+        todo_list
+
+      {:ok, _} ->
+        new_entries = Map.delete(todo_list.entries, entry_id)
+        %TodoList{todo_list | entries: new_entries}
+    end
+  end
 end
