@@ -2,11 +2,23 @@ defmodule TodoListTest do
   use ExUnit.Case
   doctest TodoList
 
-  test "creates a new to-do list" do
+  test "creates a new empty to-do list" do
     expected_entries = 0
     empty_list = TodoList.new()
 
     assert expected_entries == Enum.count(empty_list.entries)
+  end
+
+  test "creates a new to-do list with entries" do
+    test_entries = [
+      %{date: ~D[2020-12-10], title: "Dentist"},
+      %{date: ~D[2020-12-10], title: "Shopping"},
+      %{date: ~D[2020-12-10], title: "Movies"}
+    ]
+
+    test_list = TodoList.new(test_entries)
+    entries = TodoList.entries(test_list, ~D[2020-12-10])
+    assert test_entries == Enum.map(entries, &Map.delete(&1, :id))
   end
 
   test "adds entry for non-existant date" do
